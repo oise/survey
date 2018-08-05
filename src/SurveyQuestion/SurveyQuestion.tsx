@@ -16,7 +16,6 @@ class SurveyQuestion extends React.Component<ISurveyQuestion> {
             <div>{question}</div>
         )
     }
-
 }
 
 export default SurveyQuestion;

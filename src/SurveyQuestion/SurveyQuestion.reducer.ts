@@ -1,4 +1,4 @@
-import {Action} from "redux";
+
 import {GET_NEXT_QUESTION, GET_PREV_QUESTION} from "./SurveyQuestion.actions";
 
 
@@ -10,7 +10,7 @@ const initialState: IState = {
     questions: []
 };
 
-export default function (state = initialState, action: Action) {
+export default function surveyReducer(state = initialState, action: any) {
 
     switch (action.type) {
 
