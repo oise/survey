@@ -3,9 +3,18 @@ import './App.css';
 import SurveyButtons from "./SurveyButtons/SurveyButtons";
 import SurveyOptions from "./SurveyOptions/SurveyOptions";
 import SurveyQuestion from "./SurveyQuestion/SurveyQuestion";
+import {connect} from "react-redux";
 
 
-class App extends React.Component {
+interface IApp {
+    questions: string[]
+}
+
+class App extends React.Component<IApp> {
+    constructor(props: IApp) {
+        super(props)
+    }
+
     public render() {
         return (
             <div className="App container">
@@ -17,7 +26,14 @@ class App extends React.Component {
     }
 }
 
-export default App;
+const mapStateToProps = (state: any) => {
+    return {
+        questions: state.surveyReducer.questions
+    }
+};
+
+
+export default connect(mapStateToProps)(App);
 
 // Load all question into redux store as question
 // onclick next ---- move to next in array... save index in array.... index at 0;
