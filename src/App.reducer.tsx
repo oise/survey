@@ -1,7 +1,11 @@
 import {combineReducers} from "redux";
-import surveyReducer from "../src/SurveyQuestion/SurveyQuestion.reducer";
+import surveyReducer from './SurveyQuestion/SurveyQuestion.reducer';
 
 
-const appStore = combineReducers({surveyReducer});
+const appReducer = combineReducers({surveyReducer});
 
-export default appStore;
+const rootReducer = (state: any, action: any) => {
+    return appReducer(state, action);
+};
+
+export default rootReducer;

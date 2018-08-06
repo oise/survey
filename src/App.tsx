@@ -32,7 +32,6 @@ const mapStateToProps = (state: any) => {
     }
 };
 
-
 export default connect(mapStateToProps)(App);
 
 // Load all question into redux store as question
