@@ -5,6 +5,7 @@
 export const GET_NEXT_QUESTION = 'GET_NEXT_QUESTION';
 export const GET_PREV_QUESTION = 'GET_PREV_QUESTION';
 export const SAVE_ANSWERED_QUESTIONS = 'SAVE_ANSWERED_QUESTIONS';
+export const RESET_SURVEY = 'RESET_SURVEY';
 
 
 export const getNextQuestion = (payload: any) => ({
@@ -21,6 +22,9 @@ export const getPrevQuestion = (payload: any) => ({
 export const saveQuestions = (payload: any) => ({
     type: SAVE_ANSWERED_QUESTIONS,
     payload
+});
+export const resetSurvey = () => ({
+    type: RESET_SURVEY
 });
 
 

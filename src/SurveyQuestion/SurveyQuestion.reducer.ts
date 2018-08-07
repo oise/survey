@@ -1,4 +1,4 @@
-import {GET_NEXT_QUESTION, GET_PREV_QUESTION, SAVE_ANSWERED_QUESTIONS} from "./SurveyQuestion.actions";
+import {GET_NEXT_QUESTION, GET_PREV_QUESTION, RESET_SURVEY, SAVE_ANSWERED_QUESTIONS} from "./SurveyQuestion.actions";
 import {data} from "../sampleData/data";
 import {IAnsweredQuestions, IQuestion} from './question';
 import {xorBy} from "lodash";
@@ -38,6 +38,9 @@ export default function surveyReducer(state = initialState, action: any) {
                 ...state,
                 answeredQuestions: xorBy(state.answeredQuestions, [action.payload], 'question')
             };
+        }
+        case RESET_SURVEY: {
+            return initialState;
         }
 
         default: {
