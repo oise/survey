@@ -42,7 +42,7 @@ class SurveyProgress extends React.Component<ISurveyProgress, ISurveyProgressSta
         const {progress} = this.state;
         return (
             <div className="SurveyProgress">
-                <div className="SurveyProgress-bar" style={{"width": progress+'%'}}/>
+                <div className="SurveyProgress-bar" style={{"width": progress + '%'}}/>
             </div>
         )
     }
