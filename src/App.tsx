@@ -38,7 +38,7 @@ class App extends React.Component<IApp, { selectedAnswer: string }> {
         const {currentQuestion, onSaveQuestion} = this.props;
         const {selectedAnswer} = this.state;
         onSaveQuestion({question: currentQuestion.question, answer: selectedAnswer})
-    }
+    };
 
     public render() {
         const {currentQuestion, questions, onPrevQuestion, onNextQuestion, answeredQuestions} = this.props;

@@ -14,7 +14,11 @@ interface ISurveyOptionsState {
 
 class SurveyOptions extends React.Component<ISurveyOptions, ISurveyOptionsState> {
     constructor(props: ISurveyOptions) {
-        super(props)
+        super(props);
+
+        this.state = {
+            answer: ''
+        }
 
     }
 
@@ -23,7 +27,7 @@ class SurveyOptions extends React.Component<ISurveyOptions, ISurveyOptionsState>
 
         const {answerFn} = this.props;
 
-        answerFn(target.value)
+        answerFn(target.value);
 
     };
 
