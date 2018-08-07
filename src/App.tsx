@@ -3,38 +3,77 @@ import './App.css';
 import SurveyButtons from "./SurveyButtons/SurveyButtons";
 import SurveyOptions from "./SurveyOptions/SurveyOptions";
 import SurveyQuestion from "./SurveyQuestion/SurveyQuestion";
-import {connect} from "react-redux";
+import {connect, Dispatch} from "react-redux";
+import {IAnsweredQuestions, IQuestion} from './SurveyQuestion/question';
+import {getNextQuestion, getPrevQuestion, saveQuestions} from './SurveyQuestion/SurveyQuestion.actions';
+import SurveyProgress from './SurveyProgress/SurveyProgress';
 
 
 interface IApp {
-    questions: string[]
+    currentQuestion: IQuestion,
+    questions: IQuestion[],
+    answeredQuestions: IAnsweredQuestions[],
+    onPrevQuestion: any,
+    onNextQuestion: any,
+    onSaveQuestion: any
 }
 
-class App extends React.Component<IApp> {
+class App extends React.Component<IApp, { selectedAnswer: string }> {
     constructor(props: IApp) {
-        super(props)
+        super(props);
+
+        this.state = {
+            selectedAnswer: ''
+        }
+    }
+
+    public handleSelectedAnswer = (answer: string) => {
+        this.setState({
+            selectedAnswer: answer
+        })
+    }
+
+    public saveAnsweredQuestion = () => {
+        const {currentQuestion, onSaveQuestion} = this.props;
+        const {selectedAnswer} = this.state;
+        onSaveQuestion({question: currentQuestion.question, answer: selectedAnswer})
     }
 
     public render() {
+        const {currentQuestion, questions, onPrevQuestion, onNextQuestion, answeredQuestions} = this.props;
+
         return (
             <div className="App container">
-                <SurveyQuestion question="What is the qq"/>
-                <SurveyOptions type={'plain'}/>
-                <SurveyButtons/>
+                <div>
+                    <SurveyProgress totalQuestions={questions.length} numberAnswered={answeredQuestions.length}/>
+                    <SurveyQuestion question={currentQuestion.question}/>
+                    <SurveyOptions options={currentQuestion.options} type={currentQuestion.optionType}
+                                   answerFn={this.handleSelectedAnswer}/>
+                    <SurveyButtons totalQuestions={questions.length} nextQuestionFn={onNextQuestion}
+                                   isEnabled={this.state.selectedAnswer !== ''}
+                                   prevQuestionFn={onPrevQuestion} saveQuestionFn={this.saveAnsweredQuestion}/>
+                </div>
+
+
             </div>
         );
     }
 }
 
+const mapDispatchToProps = (dispatch: Dispatch<any>) => {
+    return {
+        onPrevQuestion: (index: number) => dispatch(getPrevQuestion(index)),
+        onNextQuestion: (index: number) => dispatch(getNextQuestion(index)),
+        onSaveQuestion: (answeredQuestions: IAnsweredQuestions) => dispatch(saveQuestions(answeredQuestions))
+    }
+}
+
 const mapStateToProps = (state: any) => {
     return {
-        questions: state.surveyReducer.questions
+        currentQuestion: state.surveyReducer.currentQuestion,
+        questions: state.surveyReducer.questions,
+        answeredQuestions: state.surveyReducer.answeredQuestions
     }
 };
 
-export default connect(mapStateToProps)(App);
-
-// Load all question into redux store as question
-// onclick next ---- move to next in array... save index in array.... index at 0;
-// onclick previous go to index - 1 set index
-//
+export default connect(mapStateToProps, mapDispatchToProps)(App);
