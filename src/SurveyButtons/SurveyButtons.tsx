@@ -37,12 +37,12 @@ class SurveyButtons extends React.Component<ISurveyButton> {
     public render() {
         const {isEnabled} = this.props;
         return (
-            <div className="SurveyButtons-grp">
+            <div className="SurveyButtons-wrapper">
                 <button onClick={this.decrementQuestion}
-                        className='btn btn-primary'>Back
+                        className='btn btn-primary back'>Back
                 </button>
                 <button onClick={this.incrementQuestion}
-                        className={!isEnabled ? 'disabled btn btn-primary' : 'btn btn-primary'}>Next
+                        className={!isEnabled ? 'disabled btn btn-primary next' : 'btn btn-primary next'}>Next
                 </button>
             </div>
         )

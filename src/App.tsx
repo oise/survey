@@ -7,6 +7,7 @@ import {connect, Dispatch} from "react-redux";
 import {IAnsweredQuestions, IQuestion} from './SurveyQuestion/question';
 import {getNextQuestion, getPrevQuestion, saveQuestions} from './SurveyQuestion/SurveyQuestion.actions';
 import SurveyProgress from './SurveyProgress/SurveyProgress';
+import SurveySummary from './SurveySummary/SurveySummary';
 
 
 interface IApp {
@@ -31,7 +32,7 @@ class App extends React.Component<IApp, { selectedAnswer: string }> {
         this.setState({
             selectedAnswer: answer
         })
-    }
+    };
 
     public saveAnsweredQuestion = () => {
         const {currentQuestion, onSaveQuestion} = this.props;
@@ -43,16 +44,28 @@ class App extends React.Component<IApp, { selectedAnswer: string }> {
         const {currentQuestion, questions, onPrevQuestion, onNextQuestion, answeredQuestions} = this.props;
 
         return (
-            <div className="App container">
-                <div>
+            <div className="App">
+                {questions.length !== answeredQuestions.length &&
+                <React.Fragment>
+                    <h1>Survey</h1>
                     <SurveyProgress totalQuestions={questions.length} numberAnswered={answeredQuestions.length}/>
+
                     <SurveyQuestion question={currentQuestion.question}/>
+
                     <SurveyOptions options={currentQuestion.options} type={currentQuestion.optionType}
                                    answerFn={this.handleSelectedAnswer}/>
+
                     <SurveyButtons totalQuestions={questions.length} nextQuestionFn={onNextQuestion}
                                    isEnabled={this.state.selectedAnswer !== ''}
                                    prevQuestionFn={onPrevQuestion} saveQuestionFn={this.saveAnsweredQuestion}/>
-                </div>
+                </React.Fragment>
+                }
+
+                {questions.length === answeredQuestions.length &&
+                <SurveySummary/>
+                }
+
+
             </div>
         );
     }
