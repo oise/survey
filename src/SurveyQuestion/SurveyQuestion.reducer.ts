@@ -1,13 +1,19 @@
-
-import {GET_NEXT_QUESTION, GET_PREV_QUESTION} from "./SurveyQuestion.actions";
+import {GET_NEXT_QUESTION, GET_PREV_QUESTION, SAVE_ANSWERED_QUESTIONS} from "./SurveyQuestion.actions";
+import {data} from "../sampleData/data";
+import {IAnsweredQuestions, IQuestion} from './question';
+import {xorBy} from "lodash";
 
 
 interface IState {
-    questions: string[]
+    questions: IQuestion[],
+    currentQuestion: IQuestion,
+    answeredQuestions: IAnsweredQuestions[]
 }
 
 const initialState: IState = {
-    questions: []
+    questions: data as IQuestion[],
+    currentQuestion: data[0] as IQuestion,
+    answeredQuestions: []
 };
 
 export default function surveyReducer(state = initialState, action: any) {
@@ -17,13 +23,20 @@ export default function surveyReducer(state = initialState, action: any) {
         case GET_NEXT_QUESTION: {
             return {
                 ...state,
-
+                currentQuestion: [...state.questions][action.payload]
             };
         }
 
         case GET_PREV_QUESTION: {
             return {
                 ...state,
+                currentQuestion: [...state.questions][action.payload - 1]
+            };
+        }
+        case SAVE_ANSWERED_QUESTIONS: {
+            return {
+                ...state,
+                answeredQuestions: xorBy(state.answeredQuestions, [action.payload], 'question')
             };
         }
 
