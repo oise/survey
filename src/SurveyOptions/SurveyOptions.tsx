@@ -1,4 +1,5 @@
 import * as React from "react";
+import './SurveyOptions.css';
 import {IOption} from '../SurveyQuestion/question';
 
 interface ISurveyOptions {
@@ -32,12 +33,14 @@ class SurveyOptions extends React.Component<ISurveyOptions, ISurveyOptionsState>
 
         switch (type) {
             case 'plain':
-                return <input type="text" onChange={this.handleChange} name="answer"/>;
+                return (<div className="SurveyOptions-wrapper"><input type="text" onChange={this.handleChange}
+                                                                      name="answer"/></div>);
             case 'checkbox':
                 return (typeof options === 'object' && options.map((item, index) => (
                     <React.Fragment key={index}>
-                        <label>{item.option}</label>
-                        <input type="checkbox" value={item.option} name="answer" onChange={this.handleChange}/>
+                        <label>{item.option}
+                            <input type="radio" value={item.option} name="answer" onChange={this.handleChange}/>
+                        </label>
                     </React.Fragment>
                 )));
             case 'dropdown':

@@ -1,4 +1,5 @@
 import * as React from "react";
+import "./SurveyQuestion.css";
 
 interface ISurveyQuestion {
     question: string;
@@ -13,7 +14,7 @@ class SurveyQuestion extends React.Component<ISurveyQuestion> {
         const {question} = this.props;
 
         return (
-            <div>{question}</div>
+            <div className="SurveyQuestion-wrapper">{question}</div>
         )
     }
 }
