@@ -53,8 +53,6 @@ class App extends React.Component<IApp, { selectedAnswer: string }> {
                                    isEnabled={this.state.selectedAnswer !== ''}
                                    prevQuestionFn={onPrevQuestion} saveQuestionFn={this.saveAnsweredQuestion}/>
                 </div>
-
-
             </div>
         );
     }
